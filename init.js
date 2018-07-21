@@ -4,14 +4,14 @@ var blockMap = [];
 //height
 var height = 3;
 var posIncHeight = 0.5;
-var posChangeHeight = 0.4;
-var MaxH = 7;
+var posChangeHeight = 0.5;
+var MaxH = 15;
 var MinH = 0;
 var MidH = MaxH - MinH;
 
 //steeps
 var steep = 0;
-var MaxS = 1;
+var MaxS = 2;
 var MinS = 0;
 var posChangeSteep = 0.3;
 

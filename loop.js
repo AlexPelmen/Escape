@@ -47,7 +47,7 @@ var Pers = {
 
 	//constants
 	Bx: 10,
-	By: 5,
+	By: -6,
 	Bw: 2,
 	Bh: 3,
 
@@ -88,18 +88,39 @@ var Pers = {
 Pers.refresh = () => {
 	Pers.speed.x += Pers.acceleration.x;
 	Pers.speed.y += Pers.acceleration.y;
-	vector.moveCollision( objectPers, blockObjects, Pers.speed.Get() );
+	
 	Pers.checkCollisions();
+	objectPers.move(Pers.speed.Get() );
 }
 
+
 Pers.checkCollisions = () => {
+	var Sx = Pers.speed.x ? Pers.speed.x : 1;
+	var Sy = Pers.speed.y ? Pers.speed.y : 1; 
+
+	/*objectPers.drawStaticBoxA( Sx + objectPers.w / 4, 0,  -3*objectPers.w / 4,  0, "green");
+	objectPers.drawStaticBoxS( objectPers.w / 4,  Sy + objectPers.h / 2, -objectPers.w / 2,  -objectPers.h / 2, "red");
+	objectPers.drawStaticBoxD( Sx + objectPers.w / 2, 0,  -3*objectPers.w / 4, 0, "yellow");
+	objectPers.drawStaticBoxW( objectPers.w / 4,  Sy, -objectPers.w / 2,  -objectPers.h / 2, "black");*/
+
 	blockObjects.forEach( ( block ) => {
 		if( block.isInCamera() ){
-			if( objectPers.getDistanceC( block ) < Pers.Bh + blockH + 20 ){
-				Pers.states.stand();
+			//down
+			if( block.isStaticIntersect( objectPers.getStaticBoxS( objectPers.w / 4,  Sy + objectPers.h / 2, -objectPers.w / 2,  -objectPers.h / 2 ) ) ){			
 				Pers.allowControl = true;
-				//break;
+				objectPers.setPosition( point( objectPers.x, block.y - objectPers.h ) );
+				Pers.states.stand();	//then stand
 			}
+			//right
+			if( block.isStaticIntersect( objectPers.getStaticBoxD( Sx + objectPers.w / 2, 0,  -3*objectPers.w / 4 ) ) ){
+				objectPers.setPosition( point( block.x - 3*objectPers.w/4, objectPers.y ) );
+				if( Pers.speed.x > 0 ) Pers.speed.x = 0;
+			}
+			//left
+			if( block.isStaticIntersect( objectPers.getStaticBoxA( Sx + objectPers.w / 4, 0,  -3*objectPers.w / 4 ) ) ){
+				if( Pers.speed.x < 0 ) Pers.speed.x = 0; 
+				objectPers.setPosition( point( block.x + blockW - objectPers.w/4, objectPers.y ) );
+			}			
 		}
 	})
 }
@@ -148,6 +169,15 @@ var objectPers = new pjs.game.newAnimationObject({
     w: Pers.Bw * blockW, 
     h: Pers.Bh * blockH, 
 })
+
+var test = new pjs.game.newRectObject({
+	fillColor: "#555",
+    x: Pers.Bx * blockW, 
+    y: Pers.By * blockH, 
+    w: 5, 
+    h: 5, 
+})
+
 
 //start game
 initialization();

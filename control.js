@@ -1,6 +1,3 @@
-var speed = 10;
-var boosted = false;
-
 control = () => {
 	if( Pers.allowControl ){
 		if( key.isDown( "LEFT" ) ){
@@ -31,7 +28,4 @@ control = () => {
 					Pers.states.jumpRight();
 		}
 	}
-
-
-
 }

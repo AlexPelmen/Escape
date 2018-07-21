@@ -6,6 +6,7 @@ view = () => {
 		if( b.isInCamera() )
 			b.draw();
 	})	
+	test.draw();
 
 	//pers
 	drawPers();	
@@ -14,6 +15,7 @@ view = () => {
 
 //drawing character
 function drawPers(){
+
 	Pers.refresh();
 	objectPers.draw();
 }
