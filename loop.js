@@ -44,7 +44,6 @@ const G = 1.5;
 
 //Main charater
 var Pers = {
-
 	//constants
 	Bx: 10,
 	By: -6,
@@ -62,6 +61,7 @@ var Pers = {
 	//scalar
 	walkSpeed: 4,
 	jumpSpeed: 20,
+	maxFallSpeed: 40,
 
 	//update function
 	refresh: null,
@@ -87,7 +87,8 @@ var Pers = {
 
 Pers.refresh = () => {
 	Pers.speed.x += Pers.acceleration.x;
-	Pers.speed.y += Pers.acceleration.y;
+	if( Pers.speed.y + Pers.acceleration.y < Pers.maxFallSpeed )
+		Pers.speed.y += Pers.acceleration.y;
 	
 	Pers.checkCollisions();
 	objectPers.move(Pers.speed.Get() );
@@ -98,10 +99,13 @@ Pers.checkCollisions = () => {
 	var Sx = Pers.speed.x ? Pers.speed.x : 1;
 	var Sy = Pers.speed.y ? Pers.speed.y : 1; 
 
+	var floor = false;	//smth under legs of gg
+
 	/*objectPers.drawStaticBoxA( Sx + objectPers.w / 4, 0,  -3*objectPers.w / 4,  0, "green");
 	objectPers.drawStaticBoxS( objectPers.w / 4,  Sy + objectPers.h / 2, -objectPers.w / 2,  -objectPers.h / 2, "red");
 	objectPers.drawStaticBoxD( Sx + objectPers.w / 2, 0,  -3*objectPers.w / 4, 0, "yellow");
 	objectPers.drawStaticBoxW( objectPers.w / 4,  Sy, -objectPers.w / 2,  -objectPers.h / 2, "black");*/
+	objectPers.drawStaticBoxS( objectPers.w / 4, objectPers.h, -objectPers.w / 2,  -3*objectPers.h /4 , "brown");
 
 	blockObjects.forEach( ( block ) => {
 		if( block.isInCamera() ){
@@ -120,9 +124,21 @@ Pers.checkCollisions = () => {
 			if( block.isStaticIntersect( objectPers.getStaticBoxA( Sx + objectPers.w / 4, 0,  -3*objectPers.w / 4 ) ) ){
 				if( Pers.speed.x < 0 ) Pers.speed.x = 0; 
 				objectPers.setPosition( point( block.x + blockW - objectPers.w/4, objectPers.y ) );
-			}			
+			}	
+
+			//bottom
+			if( ! floor )			
+				if( block.isStaticIntersect( objectPers.getStaticBoxS( objectPers.w / 4, objectPers.h, -objectPers.w / 2,  -3*objectPers.h /4 ) ) )		
+					floor = true;
+
 		}
 	})
+
+	if( ! floor && Pers.state != "fallsLeft" && Pers.state != "fallsRight" ) 
+		if( Pers.speed.x < 0 )
+			Pers.states.fallsLeft();
+		else
+			Pers.states.fallsRight();
 }
 
 Pers.states.goLeft = () => {
@@ -147,7 +163,7 @@ Pers.states.stand = () => {
 Pers.states.jumpLeft = () => {
 	Pers.state = "jumpLeft";
 	Pers.speed.Add( 0, -Pers.jumpSpeed );
-	Pers.acceleration.Add( 0, G );
+	//Pers.acceleration.Add( 0, G );
 	Pers.allowControl = false;
 	objectPers.setAnimation( Pers.animation.jumpLeft );
 }
@@ -155,6 +171,20 @@ Pers.states.jumpLeft = () => {
 Pers.states.jumpRight = () => {
 	Pers.state = "jumpRight";
 	Pers.speed.Add( 0, -Pers.jumpSpeed );
+	//Pers.acceleration.Add( 0, G );
+	Pers.allowControl = false;
+	objectPers.setAnimation( Pers.animation.jumpRight );
+}
+
+Pers.states.fallsLeft = () => {
+	Pers.state = "fallsLeft";
+	Pers.acceleration.Add( 0, G );
+	Pers.allowControl = false;
+	objectPers.setAnimation( Pers.animation.jumpLeft );
+}
+
+Pers.states.fallsRight = () => {
+	Pers.state = "fallsRight";
 	Pers.acceleration.Add( 0, G );
 	Pers.allowControl = false;
 	objectPers.setAnimation( Pers.animation.jumpRight );
