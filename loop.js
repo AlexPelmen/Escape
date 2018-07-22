@@ -47,10 +47,11 @@ var Pers = {
 	//constants
 	Bx: 10,
 	By: -6,
-	Bw: 2,
-	Bh: 3,
+	Bw: 1.5,
+	Bh: 2.25,
 
 	allowControl: true,
+	jumpMove: true,
 
 	//physical characteristics
 	state: "stand",
@@ -105,7 +106,7 @@ Pers.checkCollisions = () => {
 	objectPers.drawStaticBoxS( objectPers.w / 4,  Sy + objectPers.h / 2, -objectPers.w / 2,  -objectPers.h / 2, "red");
 	objectPers.drawStaticBoxD( Sx + objectPers.w / 2, 0,  -3*objectPers.w / 4, 0, "yellow");
 	objectPers.drawStaticBoxW( objectPers.w / 4,  Sy, -objectPers.w / 2,  -objectPers.h / 2, "black");*/
-	objectPers.drawStaticBoxS( objectPers.w / 4, objectPers.h, -objectPers.w / 2,  -3*objectPers.h /4 , "brown");
+	//objectPers.drawStaticBoxS( objectPers.w / 4, objectPers.h, -objectPers.w / 2,  -3*objectPers.h /4 , "brown");
 
 	blockObjects.forEach( ( block ) => {
 		if( block.isInCamera() ){
@@ -163,7 +164,6 @@ Pers.states.stand = () => {
 Pers.states.jumpLeft = () => {
 	Pers.state = "jumpLeft";
 	Pers.speed.Add( 0, -Pers.jumpSpeed );
-	//Pers.acceleration.Add( 0, G );
 	Pers.allowControl = false;
 	objectPers.setAnimation( Pers.animation.jumpLeft );
 }
@@ -171,7 +171,6 @@ Pers.states.jumpLeft = () => {
 Pers.states.jumpRight = () => {
 	Pers.state = "jumpRight";
 	Pers.speed.Add( 0, -Pers.jumpSpeed );
-	//Pers.acceleration.Add( 0, G );
 	Pers.allowControl = false;
 	objectPers.setAnimation( Pers.animation.jumpRight );
 }
@@ -189,6 +188,19 @@ Pers.states.fallsRight = () => {
 	Pers.allowControl = false;
 	objectPers.setAnimation( Pers.animation.jumpRight );
 }
+
+Pers.jumpMoveLeft = () => {
+	Pers.speed.x = -Pers.walkSpeed;
+}
+
+Pers.jumpMoveRight = () => {
+	Pers.speed.x = Pers.walkSpeed;
+}
+
+Pers.noJumpMove = () => {
+	Pers.speed.x = 0;
+}
+
 
 
 var objectPers = new pjs.game.newAnimationObject({

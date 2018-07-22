@@ -9,7 +9,6 @@ control = () => {
 			if( Pers.state != "stand" )
 				Pers.states.stand();
 		}
-
 		if( key.isDown( "RIGHT" ) ){
 			if( Pers.state != "goRight" )
 				Pers.states.goRight();
@@ -27,5 +26,16 @@ control = () => {
 				else
 					Pers.states.jumpRight();
 		}
+	}
+	
+	if( Pers.jumpMove && ! Pers.allowControl ){		
+		if( key.isDown( "LEFT" ) )
+			Pers.jumpMoveLeft();
+		if( key.isUp( "LEFT" ) )
+			Pers.noJumpMove();		
+		if( key.isDown( "RIGHT" ) )
+			Pers.jumpMoveRight();
+		if( key.isUp( "RIGHT" ) )
+			Pers.noJumpMove();
 	}
 }

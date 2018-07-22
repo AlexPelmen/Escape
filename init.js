@@ -54,8 +54,8 @@ var posChangeColor = {
 
 //blocks
 var blockObjects = [];
-var blockW = 50;
-var blockH = 50;
+var blockW = 70;
+var blockH = 70;
 
 //function to build the game world
 function initialization(){
