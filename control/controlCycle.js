@@ -28,6 +28,7 @@ controlCycle = () => {
 		}
 	}
 	
+	//Jump move
 	if( Pers.jumpMove && ! Pers.allowControl ){		
 		if( key.isDown( "LEFT" ) )
 			Pers.jumpMove.left();

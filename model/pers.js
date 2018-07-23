@@ -18,6 +18,8 @@ var Pers = {
 		jumpLeft: 	null,
 		goRight: 	null,
 		jumpRight: 	null,
+		fallsLeft:  null,
+		fallsRight: null,
 		throw: 		null
 	},
 	//motion till X-coord when pers is jumping or falling
@@ -48,45 +50,52 @@ Pers.refresh = () => {
 	objectPers.move( Pers.speed.Get() );
 }
 
+
 //check collisions and make resistance
 Pers.checkCollisions = () => {
-	var Sx = Pers.speed.x ? Pers.speed.x : 1;
-	var Sy = Pers.speed.y ? Pers.speed.y : 1;
+	var Sx = Pers.speed.x;
+	var Sy = Pers.speed.y;
 	var floor = false;	//smth under legs of pers
-
-	/*objectPers.drawStaticBoxA( Sx + objectPers.w / 4, 0,  -3*objectPers.w / 4,  0, "green");
-	objectPers.drawStaticBoxS( objectPers.w / 4,  Sy + objectPers.h / 2, -objectPers.w / 2,  -objectPers.h / 2, "red");
-	objectPers.drawStaticBoxD( Sx + objectPers.w / 2, 0,  -3*objectPers.w / 4, 0, "yellow");
-	objectPers.drawStaticBoxW( objectPers.w / 4,  Sy, -objectPers.w / 2,  -objectPers.h / 2, "black");*/
-	//objectPers.drawStaticBoxS( objectPers.w / 4, objectPers.h, -objectPers.w / 2,  -3*objectPers.h /4 , "brown");
+	var w  = objectPers.w;
+	var w2 = objectPers.w / 2;
+	var w4 = objectPers.w / 4;
+	var h  = objectPers.h;
+	var h2 = objectPers.h / 2;
+	var h4 = objectPers.h / 4;
+	var x  = objectPers.x;
+	var y  = objectPers.y;
 
 	blockObjects.forEach( ( block ) => {
 		if( block.isInCamera() ){
+
+			var bx = block.x;
+			var by = block.y;
+
 			//down
-			if( block.isStaticIntersect( objectPers.getStaticBoxS( objectPers.w / 4,  Sy + objectPers.h / 2, -objectPers.w / 2,  -objectPers.h / 2 ) ) ){			
-				Pers.allowControl = true;
-				objectPers.setPosition( point( objectPers.x, block.y - objectPers.h ) );
+			if( block.isStaticIntersect( objectPers.getStaticBoxS( w4, Sy + h2, -w2, -h2 ) ) ){			
+				objectPers.setPosition( point( x, block.y - h) );
 				Pers.states.stand();	//then stand
 			}
 			//right
-			if( block.isStaticIntersect( objectPers.getStaticBoxD( Sx + objectPers.w / 2, 0,  -3*objectPers.w / 4 ) ) ){
-				objectPers.setPosition( point( block.x - 3*objectPers.w/4, objectPers.y ) );
-				if( Pers.speed.x > 0 ) Pers.speed.x = 0;
+			if( block.isStaticIntersect( objectPers.getStaticBoxD( Sx + w2, 0, -3*w4 ) ) ){
+				objectPers.setPosition( point( bx - 3*w4, y ) );
+				if( Sx > 0 ) Pers.speed.x = 0;
 			}
 			//left
-			if( block.isStaticIntersect( objectPers.getStaticBoxA( Sx + objectPers.w / 4, 0,  -3*objectPers.w / 4 ) ) ){
-				if( Pers.speed.x < 0 ) Pers.speed.x = 0; 
-				objectPers.setPosition( point( block.x + BLOCK_W - objectPers.w/4, objectPers.y ) );
+			if( block.isStaticIntersect( objectPers.getStaticBoxA( Sx + w4, 0, -3*w4 ) ) ){
+				if( Sx < 0 ) Pers.speed.x = 0; 
+				objectPers.setPosition( point( bx + BLOCK_W - w4, y) );
 			}
 			//bottom
 			if( ! floor )			
-				if( block.isStaticIntersect( objectPers.getStaticBoxS( objectPers.w / 4, objectPers.h, -objectPers.w / 2,  -3*objectPers.h /4 ) ) )		
+				if( block.isStaticIntersect( objectPers.getStaticBoxS( w4, h, -w2, -3*h4 ) ) )		
 					floor = true;
 		}
 	})
 
+	//if there is nothing under pers's legs and he isn't falling then fall 
 	if( ! floor && Pers.state != "fallsLeft" && Pers.state != "fallsRight" ) 
-		if( Pers.speed.x < 0 )
+		if( Sx < 0 )
 			Pers.states.fallsLeft();
 		else
 			Pers.states.fallsRight();
@@ -105,7 +114,8 @@ Pers.states.goRight = () => {
 }
 
 Pers.states.stand = () => {
-	Pers.state = "stand"; 
+	Pers.state = "stand";
+	Pers.allowControl = true; 
 	Pers.speed.Set();
 	Pers.acceleration.Set();
 	objectPers.setAnimation( PERS_ANIMATION.stand );
