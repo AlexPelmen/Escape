@@ -4,7 +4,11 @@ var SHOW_COLLISION_ZONES = false;
 function viewCycle(){
 	drawBackground();
 	drawPers();
+	drawMacs();
 	drawBlocks();
+	/*Macs.array.forEach( ( mac ) => {
+		mac.drawCollisionBoxes();
+	})*/
 	if( SHOW_COLLISION_ZONES )
 		drawCollisionZones();
 }
@@ -22,10 +26,19 @@ function drawBlocks(){
 	})	
 }
 
+function drawMacs(){
+	Macs.array.forEach( ( mac ) => {
+		mac.obj.draw();
+		//mac.drawCollisionBoxes();
+	})
+}
+
 //Drawing sky
 function drawBackground(){
 	game.fill( "#ddf" );
 }
+
+
 
 function drawCollisionZones(){
 	var Sx = Pers.speed.x;

@@ -59,7 +59,7 @@ const PERS_ANIMATION = {
 	jumpLeft: 		tiles.newImage("images/gg_jumpLeft.png").getAnimation( 0, 0, 200, 300, 1 ),
 	goRight: 		tiles.newImage("images/gg_goRight.png").getAnimation(0, 0, 200, 300, 23 ),
 	jumpRight: 		tiles.newImage("images/gg_jumpRight.png").getAnimation(0, 0, 200, 300, 1 ),
-	throw: 	null,
+	throw: 			tiles.newImage("images/gg_throw.png").getAnimation(0, 0, 200, 300, 9 ),
 }
 const PERS_ANIMATION_DELAY = 3;
 
@@ -67,3 +67,23 @@ const PERS_ANIMATION_DELAY = 3;
 const PERS_WALK_SPEED = 4;
 const PERS_JUMPSPEED = 20;
 const PERS_MAX_FALLSPEED = 40;
+
+//macs
+const MAC_SPEED = 20;
+const MAC_F_RESIST = 1;
+const MAC_ANGLE_SPEED = 50;
+const MAC_TTL = 4*60;
+const MAC_POOF_TIME = 30;
+//macs animation
+const MAC_ANIMATION = {
+	fly: 			tiles.newImage("images/mac_fly.png").getAnimation(0, 0, 192, 134, 1 ),
+	poof:           tiles.newImage("images/poof.png").getAnimation(0, 0, 192, 134, 1 ),
+}
+const MAC_ANIMATION_DELAY = 3;
+const MAC_OFFSET_X = PERS_START_BW * BLOCK_W;
+const MAC_OFFSET_Y = 0;
+const MAC_W = 50;
+const MAC_H = 35;
+const FRAME_TO_THROW_MAC = 6*PERS_ANIMATION_DELAY;
+const FRAME_TO_RESET_MAC = 9*PERS_ANIMATION_DELAY;
+

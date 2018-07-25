@@ -149,6 +149,11 @@ Pers.states.fallsRight = () => {
 	objectPers.setAnimation( PERS_ANIMATION.jumpRight );
 }
 
+Pers.states.throw = () => {
+	Pers.state = "fallsRight";
+	objectPers.setAnimation( PERS_ANIMATION.throw );
+}
+
 Pers.jumpMove.left = () => {
 	Pers.speed.x = -PERS_WALK_SPEED;
 }
