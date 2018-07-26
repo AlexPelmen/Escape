@@ -3,7 +3,7 @@ var keysPressed = [];
 controlCycle = () => {
 	keysPressed = pjs.keyControl.getAllKeysDown();
 	if( Pers.allowControl ){
-		if( key.isDown( "LEFT" ) ){
+		if( key.isDown( "LEFT" ) && ! key.isDown( "SPACE" ) ){
 			if( Pers.state != "goLeft" )
 				Pers.states.goLeft();
 		}
@@ -11,7 +11,7 @@ controlCycle = () => {
 			if( Pers.state != "stand" )
 				Pers.states.stand();
 		}
-		if( key.isDown( "RIGHT" ) ){
+		if( key.isDown( "RIGHT" ) && ! key.isDown( "SPACE" ) ){
 			if( Pers.state != "goRight" )
 				Pers.states.goRight();
 		}
@@ -19,17 +19,24 @@ controlCycle = () => {
 			if( Pers.state != "stand" )
 				Pers.states.stand();
 		}
-		if( key.isDown( "UP" ) ){
+		if( key.isDown( "UP" ) && ! key.isDown( "SPACE" ) ){
 			if( Pers.state != "jumpLeft" && Pers.state != "jumpRight"  )
 				if( Pers.speed.x < 0 )
 					Pers.states.jumpLeft();
 				else
 					Pers.states.jumpRight();
 		}
-		if( key.isDown( "SPACE" ) && ! key.isDown( "LEFT" ) && ! key.isDown( "RIGHT" ) && ! key.isDown( "UP" ) ){
-			if( Pers.stete != "throw" ){
-				Pers.states.throw();
-				Macs.create();
+		if( key.isDown( "SPACE" ) && key.isDown( "LEFT" ) ){
+			if( Pers.state != "throw" ){
+				Pers.speed.Set();
+				Pers.states.throwLeft();
+			}
+			timeSpacePressed++;
+		}
+		if( key.isDown( "SPACE" ) && ! key.isDown( "LEFT" ) ){
+			if( Pers.state != "throw" ){
+				Pers.speed.Set();
+				Pers.states.throwRight();
 			}
 			timeSpacePressed++;
 		}

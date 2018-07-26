@@ -149,9 +149,14 @@ Pers.states.fallsRight = () => {
 	objectPers.setAnimation( PERS_ANIMATION.jumpRight );
 }
 
-Pers.states.throw = () => {
-	Pers.state = "fallsRight";
-	objectPers.setAnimation( PERS_ANIMATION.throw );
+Pers.states.throwLeft = () => {
+	Pers.state = "throwLeft";
+	objectPers.setAnimation( PERS_ANIMATION.throwLeft );
+}
+
+Pers.states.throwRight = () => {
+	Pers.state = "throwRight";
+	objectPers.setAnimation( PERS_ANIMATION.throwRight );
 }
 
 Pers.jumpMove.left = () => {

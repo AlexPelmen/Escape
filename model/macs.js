@@ -1,7 +1,7 @@
 var Macs = {
 	array: [],
 	refresh: null,
-	create: null,
+	createMacsCycle: null,
 };
 
 //Main charater structure
@@ -80,7 +80,8 @@ class _Mac{
 		});
 		if( ! floor ){
 			this.angleSpeed = MAC_ANGLE_SPEED;
-			this.acceleration.y = G;			
+			this.acceleration.y = G;
+			this.acceleration.x = 0;			
 		}
 		else{
 			//friction force
@@ -94,7 +95,7 @@ class _Mac{
 			this.angleSpeed = 0;
 			this.obj.setAngle( 0 );
 		}
-}
+	}
 	drawCollisionBoxes(){
 		var Sx = this.speed.x;
 		var Sy = this.speed.y;
@@ -111,32 +112,36 @@ class _Mac{
 }
 
 Macs.refresh = () => {
+	Macs.createMacsCycle();
 	if( ! Macs.array.length ) return;
 	for( i in Macs.array ){
 		var mac = Macs.array[i];
-		mac.checkCameraVisibility();		
+		mac.checkCameraVisibility();
+		mac.checkTime();	
 		mac.speed.Add( mac.acceleration.x, mac.acceleration.y );
 		mac.checkCollisions();
 		mac.obj.move( mac.speed.Get() );
 		mac.obj.turn( mac.angleSpeed );
 	}
-	mac = Macs.array[ Macs.array.length - 1 ];
+	mac = Macs.array[0];
 	if( mac.destroy ) //time to live is out
-		mac = Macs.array.pop();
+		mac = Macs.array.shift();
 }
 
 //Variable to score ticks to sync animation and creating macs
 var timeSpacePressed = 0;
 
-Macs.checkSync = () => {
+Macs.createMacsCycle = () => {
+	var s = 0;
+	if( Pers.state == "throwLeft" )
+		s = -MAC_SPEED_X;
+	if( Pers.state == "throwRight" )
+		s =  MAC_SPEED_X;
+	
+	if( !s ) return;
+
 	if( timeSpacePressed == FRAME_TO_THROW_MAC )
-		Macs.create();
+		Macs.array.push( new _Mac( new _Vector( s, MAC_SPEED_Y ) ) );
 	if( timeSpacePressed == FRAME_TO_RESET_MAC )
 		timeSpacePressed = 0;
 }
-
-Macs.create = () => {
-	if( timeSpacePressed == FRAME_TO_THROW_MAC )
-		Macs.array.push( new _Mac );
-}
-
