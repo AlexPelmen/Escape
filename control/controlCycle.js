@@ -27,16 +27,18 @@ controlCycle = () => {
 					Pers.states.jumpRight();
 		}
 		if( key.isDown( "SPACE" ) && key.isDown( "LEFT" ) ){
-			if( Pers.state != "throw" ){
+			if( Pers.state != "throwLeft" ){
 				Pers.speed.Set();
 				Pers.states.throwLeft();
+				timeSpacePressed = 0;
 			}
 			timeSpacePressed++;
 		}
 		if( key.isDown( "SPACE" ) && ! key.isDown( "LEFT" ) ){
-			if( Pers.state != "throw" ){
+			if( Pers.state != "throwRight" ){
 				Pers.speed.Set();
 				Pers.states.throwRight();
+				timeSpacePressed = 0;
 			}
 			timeSpacePressed++;
 		}

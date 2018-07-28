@@ -1,3 +1,6 @@
+//screen
+const SCREEN_W = pjs.game.getWH().w;
+const SCREEN_H = pjs.game.getWH().h;
 //height
 const POS_CHANGE_HEIGHT = 0.5;
 const MAX_H = 15;
@@ -68,6 +71,7 @@ const PERS_ANIMATION_DELAY = 3;
 const PERS_WALK_SPEED = 4;
 const PERS_JUMPSPEED = 20;
 const PERS_MAX_FALLSPEED = 40;
+const PERS_EGG_DAMAGE = 10;
 
 //macs
 const MAC_SPEED_X = 20;
@@ -89,3 +93,38 @@ const MAC_H = 35;
 const FRAME_TO_THROW_MAC = 8*PERS_ANIMATION_DELAY;
 const FRAME_TO_RESET_MAC = 15*PERS_ANIMATION_DELAY;
 
+
+//UFO
+const UFO_SPEED_X = 6;
+const UFO_SPEED_Y = 0;
+const UFO_ANIMATION = {
+	fly: 			tiles.newImage("images/ufo_attacks.png").getAnimation(0, 0, 400, 225, 1 ),
+	attacks: 		tiles.newImage("images/ufo_attacks.png").getAnimation(0, 0, 400, 225, 12 ),
+	hit: 			tiles.newImage("images/ufo_hit.png").getAnimation(0, 0, 400, 225, 13 ),	 			
+}
+const UFO_ANIMATION_DELAY = 3;
+const UFO_HIT_ANIMATION_TIME = 60;
+const UFO_ATTACKS_ANIMATION_TIME = 65;
+const UFO_EXPLODES_ANIMATION_TIME = 60;
+const UFO_AIM_POINT_DIST = 40;
+const UFO_BOMB_DIST = BLOCK_W;
+const UFO_X = PERS_START_BX * BLOCK_W /*+ 800*/;
+const UFO_W = 400;
+const UFO_H = 225;
+const UFO_Y = -MAX_H*BLOCK_H + SCREEN_H - UFO_H;
+const UFO_WAITING_TIME = 20;
+
+//Eggs
+const EGG_W = 35;
+const EGG_H = 50;
+const EGG_OFFSET_X = UFO_W/2 - EGG_W/2;
+const EGG_OFFSET_Y = UFO_H - 60;
+const EGG_ANIMATION = tiles.newImage("images/egg.png").getAnimation(0, 0, 350, 500, 1 );
+const EGG_FRAME_TO_THROW = 25;
+
+//Indicators
+const EGGS_BOX_X = 0;
+const EGGS_BOX_Y = 0;
+const EGGS_BOX_W = 200;
+const EGGS_BOX_H = 143;
+const EGGS_BOX_ANIMATION = tiles.newImage("images/eggsBox.png").getAnimation(0, 0, 200, 143, 1 );
