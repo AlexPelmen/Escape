@@ -2,7 +2,7 @@
 var Pers = {
 	//control flags	
 	allowControl: true,
-	jumpMove: false,	
+	allowJumpMove: false,	
 	state: "stand",
 	//physical characteristics
 	speed: new _Vector,
@@ -27,19 +27,29 @@ var Pers = {
 		left: null,
 		right: null,
 		stop: null
-	}
+	},
+
+	init: null
 }
 
 //AnimationObject of pers 
-var objectPers = new pjs.game.newAnimationObject({
-	animation : PERS_ANIMATION.stand, 
-	delay: PERS_ANIMATION_DELAY,
-    x: PERS_START_BX * BLOCK_W, 
-    y: PERS_START_BY * BLOCK_H, 
-    w: PERS_START_BW * BLOCK_W, 
-    h: PERS_START_BH * BLOCK_H, 
-})
+objectPers = {};
 
+Pers.init = () => {
+	Pers.allowControl = true;
+	Pers.allowJumpMove = true;	
+	Pers.state = "stand";
+	Pers.health = 100;
+	
+	objectPers = new pjs.game.newAnimationObject({
+		animation : PERS_ANIMATION.stand, 
+		delay: PERS_ANIMATION_DELAY,
+	    x: PERS_START_BX * BLOCK_W, 
+	    y: PERS_START_BY * BLOCK_H, 
+	    w: PERS_START_BW * BLOCK_W, 
+	    h: PERS_START_BH * BLOCK_H, 
+	})	
+}
 
 //Cycle refreshing pers's data
 Pers.refresh = () => {

@@ -9,6 +9,7 @@ var Ufo = {
 	lastSpeed: null,
 	changeSpeedTime: 0,
 	checkCollisions: null,
+	init: null,
 
 	states: {
 		fly: null,
@@ -18,17 +19,23 @@ var Ufo = {
 	}
 }
 
-Ufo.obj =  new game.newAnimationObject({
-	x: UFO_X,
-	y: UFO_Y,
-	w: UFO_W,
-	h: UFO_H,
-	delay: UFO_ANIMATION_DELAY,
-	animation: UFO_ANIMATION.fly
-});
-
 //variable to count number of animation frames, which've been played yet
 animationFramesPlayed = 0;
+
+Ufo.init = () => {
+	Ufo.obj =  new game.newAnimationObject({
+		x: UFO_X,
+		y: UFO_Y,
+		w: UFO_W,
+		h: UFO_H,
+		delay: UFO_ANIMATION_DELAY,
+		animation: UFO_ANIMATION.fly
+	});
+
+	animationFramesPlayed = 0;
+}
+
+
 
 Ufo.refresh = () => {
 	animationFramesPlayed++;

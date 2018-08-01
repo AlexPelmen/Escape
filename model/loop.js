@@ -7,5 +7,5 @@ game.newLoop( "game", () => {
 });
 
 //start game
-buildMap();
+WinLoose.start();
 game.startLoop( "game" );

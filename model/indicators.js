@@ -7,6 +7,10 @@ var EggsBox = {
 	eggs: 10
 }
 
+EggsBox.init = () => {
+	EggsBox.eggs = 10;
+}
+
 EggsBox.obj = new game.newAnimationObject({
 	x: camera.getPosition().x,
 	y: camera.getPosition().y,

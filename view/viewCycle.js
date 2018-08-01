@@ -2,13 +2,15 @@
 var SHOW_COLLISION_ZONES = false;
 
 function viewCycle(){
-	drawBackground();
-	drawPers();
-	drawMacs();
-	drawBlocks();
-	drawEggs();
-	drawUfo();
-	drawIndicators();	
+	if( WinLoose.playing ){
+		drawBackground();
+		drawPers();
+		drawMacs();
+		drawBlocks();
+		drawEggs();
+		drawUfo();
+		drawIndicators();	
+	}
 }
 
 //drawing character

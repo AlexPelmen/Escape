@@ -15,7 +15,7 @@ const POS_CHANGE_STEEP = 0.3;
 //block coords
 const MIN_BX = 0;
 const MIN_BY = MIN_H;
-const MAX_BX = 1000;
+const MAX_BX = 300;
 const MAX_BY = MAX_H;
 
 //color
@@ -128,3 +128,23 @@ const EGGS_BOX_Y = 0;
 const EGGS_BOX_W = 200;
 const EGGS_BOX_H = 143;
 const EGGS_BOX_ANIMATION = tiles.newImage("images/eggsBox.png").getAnimation(0, 0, 200, 143, 1 );
+
+//WinLoose
+const WIN_PIC = game.newImageObject({
+		file: "images/win.jpg",
+		x: 0,
+		y: 0,
+		w: SCREEN_W,
+		h: SCREEN_H
+	});
+const LOOSE_PIC = game.newImageObject({
+		file: "images/loose.jpg",
+		x: 0,
+		y: 0,
+		w: SCREEN_W,
+		h: SCREEN_H
+	});
+const WIN_X = MAX_BX*0.95 * BLOCK_W;
+
+//audio
+const AUDIO_MAIN = pjs.wAudio.newAudio( "Apache.mp3", 0.2 );

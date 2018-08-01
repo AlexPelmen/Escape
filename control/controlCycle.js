@@ -2,7 +2,7 @@ var keysPressed = [];
 
 controlCycle = () => {
 	keysPressed = pjs.keyControl.getAllKeysDown();
-	if( Pers.allowControl ){
+	if( Pers.allowControl && WinLoose.playing ){
 		if( key.isDown( "LEFT" ) && ! key.isDown( "SPACE" ) ){
 			if( Pers.state != "goLeft" )
 				Pers.states.goLeft();
@@ -48,9 +48,12 @@ controlCycle = () => {
 				Pers.states.stand();
 		}
 	}
+
+	if( ! WinLoose.playing && key.isDown( "SPACE" ) )
+		WinLoose.start();
 	
 	//Jump move
-	if( Pers.jumpMove && ! Pers.allowControl ){		
+	if( Pers.allowJumpMove && ! Pers.allowControl ){		
 		if( key.isDown( "LEFT" ) )
 			Pers.jumpMove.left();
 		if( key.isUp( "LEFT" ) )
